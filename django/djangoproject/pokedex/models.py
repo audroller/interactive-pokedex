@@ -9,26 +9,23 @@ from django.db import models
 #Abilites
 #Users
 
+class EleType(models.Model):
+    Name = models.TextField(primary_key=True)
+    Effective = models.ManyToManyField("self")
+    Weakness = models.ManyToManyField("self")
+    
+    def __str__(self):
+        return f"<name: {self.Name}>"
 
 class Pokemon(models.Model):
-    Number = models.IntegerField(primary_key=True)
-    Name = models.TextField()
-    JapaneseName=models.TextField()
-    Generation=models.PositiveIntegerField()
-    LegendaryStatus=models.IntegerField()
-    Classification = models.TextField()
-    ImageLink = models.TextField()
-    Height = models.IntegerField()
-    Weight = models.IntegerField()
-    Attack= models.IntegerField()
-    Defense=models.IntegerField()
-    SpAttack=models.IntegerField()
-    SpDefense=models.IntegerField()
-    Speed=models.IntegerField()
-    HP=models.IntegerField()
-    StatTotal=models.IntegerField()
-    PrevEvolution = models.ForeignKey("self")
-
+    number = models.IntegerField(primary_key=True)
+    name = models.TextField()
+    classification = models.TextField()
+    image_link = models.TextField()
+    height = models.IntegerField()
+    weight = models.IntegerField()
+    PrevEvolution = models.ForeignKey("self", on_delete=models.CASCADE)
+    Type = models.ManyToManyField(EleType)
 
     class Meta:
         verbose_name_plural = "Pokemon"
@@ -36,13 +33,7 @@ class Pokemon(models.Model):
     def __str__(self):
         return f"<ID: {self.number} Name: {self.name} Types: >"
     
-class EleType(models.Model):
-    Name = models.TextField(primary_key=True)
-    Effective = models.ManyToManyField("self")
-    Weakness = models.ManyToManyField("self")
-    Pokemon = models.ManyToManyField(Pokemon)
-    def __str__(self):
-        return f"<name: {self.Name}>"
+
 
 class Ability(models.Model):
     abilityID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -61,4 +52,4 @@ class User(models.Model):
     ranking=models.ManyToManyField(Pokemon)
 
     def __str__(self):
-        return f"<ID: {self.userid} Username: {self.username}>"
+        return f"<ID: {self.userid} Username: {self.username}>" 

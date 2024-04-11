@@ -4,12 +4,20 @@ from django.db import models
 
 # Create your models here.
 
-#Student
-#Course
-#Room
-#Enrollment
+#Pokemon
+#Type
+#Abilites
+#Users
 
 
+class Pokemon(models.Model):
+    number = models.IntegerField(primary_key=True)
+    name = models.TextField()
+
+
+    def __str__(self):
+        return f"<ID: {self.number} Name: {self.name} Types: >"
+'''
 class Room(models.Model):
     number = models.TextField(primary_key=True)
     capacity = models.IntegerField()
@@ -39,3 +47,4 @@ class Student(models.Model):
         return "<Profile id={} name={} >".format(
             self.stud_id, self.name,
         )
+'''

@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'pokedex.apps.PokedexConfig',
     'university.apps.UniversityConfig',
     'minifacebook.apps.MinifacebookConfig',
     'django.contrib.admin',

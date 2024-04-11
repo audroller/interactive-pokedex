@@ -17,6 +17,7 @@ class Pokemon(models.Model):
     image_link = models.TextField()
     height = models.IntegerField()
     weight = models.IntegerField()
+    PrevEvolution = models.ForeignKey("self")
 
     class Meta:
         verbose_name_plural = "Pokemon"

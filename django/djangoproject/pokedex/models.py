@@ -9,6 +9,13 @@ from django.db import models
 #Abilites
 #Users
 
+class EleType(models.Model):
+    Name = models.TextField(primary_key=True)
+    Effective = models.ManyToManyField("self")
+    Weakness = models.ManyToManyField("self")
+    
+    def __str__(self):
+        return f"<name: {self.Name}>"
 
 class Pokemon(models.Model):
     number = models.IntegerField(primary_key=True)
@@ -17,8 +24,8 @@ class Pokemon(models.Model):
     image_link = models.TextField()
     height = models.IntegerField()
     weight = models.IntegerField()
-    PrevEvolution = models.ForeignKey("self")
-
+    PrevEvolution = models.ForeignKey("self", on_delete=models.CASCADE)
+    Type = models.ManyToManyField(EleType)
 
     class Meta:
         verbose_name_plural = "Pokemon"
@@ -26,13 +33,7 @@ class Pokemon(models.Model):
     def __str__(self):
         return f"<ID: {self.number} Name: {self.name} Types: >"
     
-class EleType(models.Model):
-    Name = models.TextField(primary_key=True)
-    Effective = models.ManyToManyField("self")
-    Weakness = models.ManyToManyField("self")
-    Pokemon = models.ManyToManyField(Pokemon)
-    def __str__(self):
-        return f"<name: {self.Name}>"
+
 
 class Ability(models.Model):
     abilityID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

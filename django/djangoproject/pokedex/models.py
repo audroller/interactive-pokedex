@@ -10,9 +10,9 @@ from django.db import models
 #Users
 
 class EleType(models.Model):
-    Name = models.TextField(primary_key=True)
-    Effective = models.ManyToManyField("self")
-    Weakness = models.ManyToManyField("self")
+    name = models.TextField(primary_key=True)
+    effective = models.ManyToManyField("self")
+    weakness = models.ManyToManyField("self")
     
     def __str__(self):
         return f"<name: {self.Name}>"
@@ -35,9 +35,9 @@ class Pokemon(models.Model):
     image_link = models.TextField()
     height = models.IntegerField()
     weight = models.IntegerField()
-    PrevEvolution = models.ForeignKey("self", on_delete=models.CASCADE)
-    Type = models.ManyToManyField(EleType)
-    Abilities = models.ManyToManyField(Ability)
+    prevevolution = models.ForeignKey("self", on_delete=models.CASCADE)
+    type = models.ManyToManyField(EleType)
+    abilities = models.ManyToManyField(Ability)
 
     class Meta:
         verbose_name_plural = "Pokemon"

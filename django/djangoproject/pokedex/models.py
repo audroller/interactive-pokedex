@@ -14,6 +14,7 @@ class Pokemon(models.Model):
     number = models.IntegerField(primary_key=True)
     name = models.TextField()
 
+
     class Meta:
         verbose_name_plural = "Pokemon"
 
@@ -51,4 +52,4 @@ class User(models.Model):
     ranking=models.ManyToManyField(Pokemon)
 
     def __str__(self):
-        return f"<ID: {self.userid} Username: {self.username}>"
+        return f"<ID: {self.userid} Username: {self.username}>" 

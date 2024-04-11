@@ -13,6 +13,10 @@ from django.db import models
 class Pokemon(models.Model):
     number = models.IntegerField(primary_key=True)
     name = models.TextField()
+    classification = models.TextField()
+    image_link = models.TextField()
+    height = models.IntegerField()
+    weight = models.IntegerField()
 
     class Meta:
         verbose_name_plural = "Pokemon"
@@ -22,13 +26,14 @@ class Pokemon(models.Model):
     
 class EleType(models.Model):
     Name = models.TextField(primary_key=True)
-    Effective = models.ForeignKey("self", on_delete=models.CASCADE)
-    Pokemon = models.ManyToManyRel("self", Pokemon)
+    Effective = models.ManyToManyField("self")
+    Weakness = models.ManyToManyField("self")
+    Pokemon = models.ManyToManyField(Pokemon)
     def __str__(self):
         return f"<name: {self.Name}>"
 
 class Ability(models.Model):
-    abilityID = models.IntegerField(primary_key=True)
+    abilityID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.TextField()
     affect = models.TextField()
 

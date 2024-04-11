@@ -17,15 +17,15 @@ class Pokemon(models.Model):
 
     def __str__(self):
         return f"<ID: {self.number} Name: {self.name} Types: >"
-'''
-class Room(models.Model):
-    number = models.TextField(primary_key=True)
-    capacity = models.IntegerField()
 
+class Ability(models.Model):
+    abilityID = models.IntegerField(primary_key=True)
+    name = models.TextField()
+    affect = models.TextField()
     def __str__(self):
-        return f"<Room {self.number} can hold {self.capacity} people>"
+        return f"<AbilityID: {self.abilityID} Name: {self.name} Affect: {self.affect}>"
 
-
+'''
 class Course(models.Model):
     co_number = models.TextField(primary_key=True)
     title = models.TextField()

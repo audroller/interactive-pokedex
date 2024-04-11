@@ -32,7 +32,7 @@ class Type(models):
     Name = models.TextField(primary_key=True)
     Effective = models.ManyToManyField("self")
     Weakness = models.ManyToManyField("self")
-    Pokemon = models.ManyToManyRel(Pokemon)
+    Pokemon = models.ManyToManyField(Pokemon)
 
 class Ability(models.Model):
     abilityID = models.IntegerField(primary_key=True)

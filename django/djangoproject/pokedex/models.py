@@ -11,12 +11,22 @@ from django.db import models
 
 
 class Pokemon(models.Model):
-    number = models.IntegerField(primary_key=True)
-    name = models.TextField()
-    classification = models.TextField()
-    image_link = models.TextField()
-    height = models.IntegerField()
-    weight = models.IntegerField()
+    Number = models.IntegerField(primary_key=True)
+    Name = models.TextField()
+    JapaneseName=models.TextField()
+    Generation=models.PositiveIntegerField()
+    LegendaryStatus=models.IntegerField()
+    Classification = models.TextField()
+    ImageLink = models.TextField()
+    Height = models.IntegerField()
+    Weight = models.IntegerField()
+    Attack= models.IntegerField()
+    Defense=models.IntegerField()
+    SpAttack=models.IntegerField()
+    SpDefense=models.IntegerField()
+    Speed=models.IntegerField()
+    HP=models.IntegerField()
+    StatTotal=models.IntegerField()
     PrevEvolution = models.ForeignKey("self")
 
 
@@ -51,4 +61,4 @@ class User(models.Model):
     ranking=models.ManyToManyField(Pokemon)
 
     def __str__(self):
-        return f"<ID: {self.userid} Username: {self.username}>" 
+        return f"<ID: {self.userid} Username: {self.username}>"

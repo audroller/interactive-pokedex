@@ -14,9 +14,24 @@ class Pokemon(models.Model):
     number = models.IntegerField(primary_key=True)
     name = models.TextField()
 
-
+    class Meta:
+        verbose_name_plural = "Pokemon"
     def __str__(self):
         return f"<ID: {self.number} Name: {self.name} Types: >"
+<<<<<<< Updated upstream
+=======
+    
+class Type(models):
+    Name = models.TextField(primary_key=True)
+    Effective = models.ManyToManyField("self")
+    Weakness = models.ManyToManyField("self")
+    Pokemon = models.ManyToManyRel(Pokemon)
+
+'''
+class Room(models.Model):
+    number = models.TextField(primary_key=True)
+    capacity = models.IntegerField()
+>>>>>>> Stashed changes
 
 class Ability(models.Model):
     abilityID = models.IntegerField(primary_key=True)

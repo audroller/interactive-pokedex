@@ -14,9 +14,9 @@ class EleType(models.Model):
     name = models.TextField(primary_key=True)
     effective = models.ManyToManyField("self", related_name='+', blank=True, symmetrical=False)
     weakness = models.ManyToManyField("self", blank=True, symmetrical=False)
-    
+
     def __str__(self):
-        return f"<name: {self.Name}>"
+        return f"<name: {self.name}>"
 
 class Ability(models.Model):
     abilityID = models.IntegerField(primary_key=True)
@@ -35,8 +35,8 @@ class Pokemon(models.Model):
     classification = models.TextField()
     image_link = models.TextField()
     height = models.IntegerField()
-    weight = models.IntegerField()
-    prevevolution = models.ForeignKey("self", on_delete=models.CASCADE)
+    weight = models.FloatField()
+    prevevolution = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
     type = models.ManyToManyField(EleType)
     abilities = models.ManyToManyField(Ability)
 

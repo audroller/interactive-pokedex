@@ -9,10 +9,11 @@ from django.db import models
 #Abilites
 #Users
 
+
 class EleType(models.Model):
     name = models.TextField(primary_key=True)
-    effective = models.ManyToManyField("self")
-    weakness = models.ManyToManyField("self")
+    effective = models.ManyToManyField("self", related_name='+', blank=True, symmetrical=False)
+    weakness = models.ManyToManyField("self", blank=True, symmetrical=False)
     
     def __str__(self):
         return f"<name: {self.Name}>"

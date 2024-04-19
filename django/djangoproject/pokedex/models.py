@@ -20,7 +20,7 @@ class EleType(models.Model):
 
 class Ability(models.Model):
     abilityID = models.IntegerField(primary_key=True)
-    name = models.TextField()
+    name = models.TextField(db_index=True)
     affect = models.TextField()
 
     class Meta:
@@ -33,8 +33,7 @@ class Pokemon(models.Model):
     number = models.IntegerField(primary_key=True)
     name = models.TextField()
     classification = models.TextField()
-    image_link = models.TextField()
-    height = models.IntegerField()
+    height = models.FloatField()
     weight = models.FloatField()
     prevevolution = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
     type = models.ManyToManyField(EleType)

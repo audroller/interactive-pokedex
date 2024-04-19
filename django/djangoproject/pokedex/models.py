@@ -12,8 +12,10 @@ from django.db import models
 
 class EleType(models.Model):
     name = models.TextField(primary_key=True)
+    
     effective = models.ManyToManyField("self", related_name='+', blank=True, symmetrical=False)
     weakness = models.ManyToManyField("self", blank=True, symmetrical=False)
+    no_effect_on = models.ManyToManyField("self",  related_name="+", blank=True, symmetrical=False)
 
     def __str__(self):
         return f"<name: {self.name}>"
@@ -44,7 +46,14 @@ class Pokemon(models.Model):
 
     def __str__(self):
         return f"<ID: {self.number} Name: {self.name} Types: >"
-    
+
+class PokemonImage(models.Model):
+    image = models.ImageField(upload_to="pokeimages")
+    description = models.CharField(max_length=64)
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE,db_index=True)
+
+    class Meta:
+        unique_together = ('pokemon', 'description',)
     
 class User(models.Model):
     userid=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

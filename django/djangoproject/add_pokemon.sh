@@ -33,7 +33,6 @@ curl https://gist.githubusercontent.com/chlohal/94e668bbf5403eda4fa0420d7c9deb93
     # Skip the header line with `sed`
     sed '1d' | python3 ./add_pokemon.py pokemon
 
-exit 0
 # # IMAGES # # 
 
 # This makes `pokemon_images.tar.gz`

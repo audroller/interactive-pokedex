@@ -9,8 +9,8 @@ python3 manage.py makemigrations && python3 manage.py migrate
 # # POKEMON TYPES # #
 
 # Grab pokemon type chart data
-curl https://gist.githubusercontent.com/chlohal/ee4667835256866d5d45c5729c0fdd1f/raw/poketypes.csv |
-    # feed the CSV to the python script to add the 'types to the DB
+curl https://gist.githubusercontent.com/chlohal/ee4667835256866d5d45c5729c0fdd1f/raw |
+    # feed the CSV to the python script to add the types to the DB
     # The CSV I found uses ';' as a list separator, but it's easier on the Python if we 
     # use ' ', so `tr` it into a good format.
     tr ';' ' ' | 
@@ -18,7 +18,7 @@ curl https://gist.githubusercontent.com/chlohal/ee4667835256866d5d45c5729c0fdd1f
 
 # # ABILITIES # #
 
-curl https://gist.githubusercontent.com/chlohal/abaa991d3aaa88991d59485c962397c2/raw/pokeabilities.csv | 
+curl https://gist.githubusercontent.com/chlohal/abaa991d3aaa88991d59485c962397c2/raw | 
     python3 ./add_pokemon.py pokeabilities
 
 
@@ -28,7 +28,7 @@ curl https://gist.githubusercontent.com/chlohal/abaa991d3aaa88991d59485c962397c2
 # Originally, this data was at https://www.kaggle.com/datasets/rounakbanik/pokemon
 # However, it's CC0, and Kaggle is annoying to download from automatically, so I 
 # mirrored the CSV to Github.
-curl https://gist.githubusercontent.com/chlohal/94e668bbf5403eda4fa0420d7c9deb93/raw/pokemon.csv |
+curl https://gist.githubusercontent.com/chlohal/94e668bbf5403eda4fa0420d7c9deb93/raw |
     # feed the CSV to the python script to add the 'mons to the DB
     # Skip the header line with `sed`
     sed '1d' | python3 ./add_pokemon.py pokemon

@@ -3,8 +3,14 @@
 set -euo pipefail
 
 # Run migrations
-python3 manage.py flush --noinput ## DEBUG: DELETE ME LATER. THIS RESETS THE DATABASE EVERY TIME, TO ENSURE THAT THIS SCRIPT CAN RESURRECT IT
+# python3 manage.py flush --noinput && python3 manage.py makemigrations --empty pokedex ## DEBUG: DELETE ME LATER. THIS RESETS THE DATABASE EVERY TIME, TO ENSURE THAT THIS SCRIPT CAN RESURRECT IT
 python3 manage.py makemigrations && python3 manage.py migrate
+
+if python3 ./add_pokemon.py pokemon_are_added 
+    then 
+        echo "Database set up and filled with pokemon already"
+        exit 0
+fi
 
 # # POKEMON TYPES # #
 
@@ -31,7 +37,20 @@ curl https://gist.githubusercontent.com/chlohal/abaa991d3aaa88991d59485c962397c2
 curl https://gist.githubusercontent.com/chlohal/94e668bbf5403eda4fa0420d7c9deb93/raw |
     # feed the CSV to the python script to add the 'mons to the DB
     # Skip the header line with `sed`
-    sed '1d' | python3 ./add_pokemon.py pokemon
+    sed '1d' | 
+    # The abilities array can have embedded commas, so change its format to be semicolon-separated
+    awk -F ']' -v OFS=']' '{gsub(/,/, ";", $1); print}' |
+    # We only care about the first 650 pokemon (up to gen 5)
+    awk -F ',' '$33 < 650' |
+    python3 ./add_pokemon.py pokemon
+
+# # POKEMON EVOLUTIONS # #
+
+curl https://gist.githubusercontent.com/chlohal/db003077643332bd74e9738598ad443d/raw?asd |
+    sed '1d' | 
+    # We only care about the first 650 pokemon (up to gen 5)
+    awk -F ',' '$1 < 650 && $2 < 650' | 
+    python3 ./add_pokemon.py pokelutions
 
 # # IMAGES # # 
 

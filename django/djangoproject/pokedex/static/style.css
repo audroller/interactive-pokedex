@@ -1,0 +1,130 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+img.pixelart {
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    object-fit: contain;
+}
+
+main {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+aside.pokemon-list {
+    overflow: auto;
+    width: 100%;
+}
+
+.pokemon-list ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+}
+
+.pokemon-list li {
+    list-style-type: none;
+    display: flex;
+    width: 6em;
+    writing-mode: sideways-lr;
+    box-sizing: content-box;
+    
+}
+
+.pokemon-list-quick-info {
+    display: flex;
+    flex-grow: 1;
+    gap: 0.5em;
+    padding: 1em;
+    transform-origin: bottom right;
+    transform: translate(-18.08479%, 14.14213%) rotate(35deg);
+    position: relative;
+    flex-direction: column;
+    border-top-left-radius: 1em;
+}
+
+.pokemon-list-quick-info::before {
+    content: "";
+    background: inherit;
+    position: absolute;
+    bottom: -6em;
+    left: 0;
+    height: 6em;
+    width: 6em;
+    z-index: -1;
+    transform: rotate(-35deg);
+    transform-origin: top left;
+}
+
+.pokemon-list li img.pixelart, .pokemon-list-quick-info {
+    background-color: #F2F2F2;
+}
+
+.pokemon-list li img.pixelart {
+    grid-row: 1 / 3;
+    height: 6em;
+    width: 6em;
+    padding: 0.5em;
+    z-index: 2;
+}
+
+.pokemon-list li h2 {
+    margin: 0;
+}
+
+main .pokemon-info {
+    background-color: black;
+    flex-grow: 1;
+}
+
+@media screen and ( min-width: 120ch ) {
+    main {
+        flex-direction: row;
+        margin: auto;
+        max-width: 120ch;
+        height: 100%;
+        width: 100%;
+    }
+    aside.pokemon-list {
+        height: 100%;
+        max-width: max-content;
+    }
+    .pokemon-list ul {
+        flex-direction: column;
+        gap: 1em;
+    }
+    .pokemon-list li {
+        height: 6em;
+        width: unset;
+        writing-mode: initial;
+    }
+    .pokemon-list-quick-info {
+        transform: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 1em;
+    }
+    .pokemon-list-quick-info::before {
+        content: unset;
+    }
+    .pokemon-list li img.pixelart {
+        z-index: unset;
+    }
+}

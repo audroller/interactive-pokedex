@@ -2,6 +2,8 @@ from sys import argv, stdin
 
 from csv import reader
 
+from PIL import Image
+
 import django
 from django.db import transaction
 from django.db.models import Q
@@ -38,14 +40,24 @@ def add_images():
                 important_parts.append(part)
         description=" ".join(important_parts).title()
 
-        print(pokemon_number)
-        img = PokemonImage(
-            pokemon=Pokemon.objects.get(number=pokemon_number),
+        pokemon = Pokemon.objects.get(number=pokemon_number)
+
+        dj_img = PokemonImage(
+            pokemon=pokemon,
             description=description,
         )
 
-        img.image.save(basename, open(filename, 'br'))
-        img.save()
+        # Use Pillow to crop the image's blank space
+        im = Image.open(filename)
+        im2 = im.crop(im.getbbox())
+        im2.save(filename)
+
+        dj_img.image.save(basename, open(filename, 'br'))
+        dj_img.save()
+
+        if len(important_parts) == 0 or not pokemon.primary_image:
+            pokemon.primary_image = dj_img
+            pokemon.save()
 
     
     with transaction.atomic():
@@ -78,7 +90,7 @@ def add_pokemon():
         # Adding many-to-many has to be done after the initial creation of the pokemon
         pokemon.type.add(*EleType.objects.filter(Q(name=type1) | Q(name=type2)))
 
-        for ability_name in loads(abilities.replace("'", "\"")):
+        for ability_name in loads(abilities.replace("'", "\"").replace(";", ",")):
             pokemon.abilities.add(ability_map[ability_name])
         
         pokemon.save()
@@ -125,11 +137,32 @@ def add_pokeabilities():
             for i,(name,desc) in enumerate(reader(stdin))
         ])
 
+def add_pokelutions():
+    with transaction.atomic():
+        for pokemon_number,number_evolved_from in reader(stdin):
+            if not number_evolved_from:
+                continue
+
+            mon = Pokemon.objects.get(number=pokemon_number)
+            pre_mon = Pokemon.objects.get(number=number_evolved_from)
+
+            mon.prevevolution = pre_mon
+            mon.save()
+
+
+def check_pokemon_added():
+    # there should be exactly 801 pokemon in the DB.
+    if Pokemon.objects.count() == 801:
+        exit(0)
+    else:
+        exit(2)
 
 if __name__ == "__main__":
     cmd = argv[1]
 
     match cmd:
+        case "pokemon_are_added":
+            check_pokemon_added()
         case "images":
             add_images()
         case "pokemon":
@@ -138,4 +171,6 @@ if __name__ == "__main__":
             add_poketypes()
         case "pokeabilities":
             add_pokeabilities()
+        case "pokelutions":
+            add_pokelutions()
     

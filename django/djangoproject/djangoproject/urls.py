@@ -18,8 +18,6 @@ from django.shortcuts import redirect
 from django.urls import include, path
 
 urlpatterns = [
-    path('', lambda req: redirect('admin/')),
-    path('minifacebook/', include('minifacebook.urls')),
-    #path('university/', include('university.urls')),
+    path('pokedex/', include('pokedex.urls')),
     path('admin/', admin.site.urls),
 ]

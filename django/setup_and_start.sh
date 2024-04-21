@@ -15,6 +15,9 @@ while database_inaccessible ; do
   sleep 2
 done
 
+# Initialize database
+./add_pokemon.sh
+
 echo "Copying static resources to STATIC_ROOT"
 python3 manage.py collectstatic --noinput
 

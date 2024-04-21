@@ -37,8 +37,6 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'pokedex.apps.PokedexConfig',
-    'university.apps.UniversityConfig',
-    'minifacebook.apps.MinifacebookConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -150,3 +149,6 @@ STATIC_ROOT = os.path.join(os.path.abspath(os.sep), "gen")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(os.path.abspath(os.sep), "usermedia")

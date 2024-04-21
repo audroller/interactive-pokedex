@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta name="viewport" content="initial-scale=1,user-scalable=1,interactive-widget=overlays-content">
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <aside class="pokemon-list">
+            <ul>
+                {% for p in pokemon %}
+                <li>
+                    <img class="pixelart" loading="lazy" src="{{ MEDIA_URL }}{{p.primary_image.image}}" width="96" height="96">
+                    <div class="pokemon-list-quick-info">
+                        <h2>{{ p.name }}</h2>
+                        {{ p.number }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+        <div class="pokemon-info">
+
+        </div>
+    </main>
+</body>
+
+</html>

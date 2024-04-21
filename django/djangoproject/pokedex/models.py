@@ -35,6 +35,7 @@ class Pokemon(models.Model):
     number = models.IntegerField(primary_key=True)
     name = models.TextField()
     classification = models.TextField()
+    primary_image = models.ForeignKey("PokemonImage", on_delete=models.CASCADE, related_name="primary_image_of", null=True, blank=True)
     height = models.FloatField()
     weight = models.FloatField()
     prevevolution = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)

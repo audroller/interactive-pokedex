@@ -15,17 +15,19 @@
             <ul>
                 {% for p in pokemon %}
                 <li>
-                    <img class="pixelart" loading="lazy" src="{{ MEDIA_URL }}{{p.primary_image.image}}" width="96" height="96">
-                    <div class="pokemon-list-quick-info">
+                    <a href="/pokedex/{{p.number}}">
+                        <img class="pixelart" loading="lazy" src="{{ MEDIA_URL }}{{p.primary_image.image}}" width="96" height="96">
+                    </a>
+                    <a href="/pokedex/{{p.number}}" class="pokemon-list-quick-info">
                         <h2>{{ p.name }}</h2>
                         {{ p.number }}
-                    </div>
+                    </a>
                 </li>
                 {% endfor %}
             </ul>
         </aside>
         <div class="pokemon-info">
-
+            <h1>{{selected_pokemon.name}}</h1>
         </div>
     </main>
 </body>

@@ -91,7 +91,6 @@ aside.pokemon-list {
 }
 
 main .pokemon-info {
-    background-color: black;
     flex-grow: 1;
 }
 

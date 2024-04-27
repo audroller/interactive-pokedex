@@ -38,7 +38,7 @@ class Pokemon(models.Model):
     primary_image = models.ForeignKey("PokemonImage", on_delete=models.CASCADE, related_name="primary_image_of", null=True, blank=True)
     height = models.FloatField()
     weight = models.FloatField()
-    prevevolution = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    prevevolution = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="postevolutions")
     type = models.ManyToManyField(EleType)
     abilities = models.ManyToManyField(Ability)
 

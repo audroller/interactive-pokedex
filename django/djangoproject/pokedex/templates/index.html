@@ -6,6 +6,18 @@
     <title>Pokedex</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <meta name="viewport" content="initial-scale=1,user-scalable=1,interactive-widget=overlays-content">
+    <script>
+        let pokemon_id = window.location.pathname.split("/")[2];
+        let pokemon_in_question = document.getElementById("pokemon-" + pokemon_id);
+        if(pokemon_in_question) {
+            window.addEventListener("load", function() {
+                pokemon_in_question.scrollIntoView()
+            });
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -14,11 +26,11 @@
         <aside class="pokemon-list">
             <ul>
                 {% for p in pokemon %}
-                <li>
-                    <a href="/pokedex/{{p.number}}">
+                <li id="pokemon-{{p.number}}">
+                    <a href="/pokedex/{{p.number}}#pokemon-{{p.number}}">
                         <img class="pixelart" loading="lazy" src="{{ MEDIA_URL }}{{p.primary_image.image}}" width="96" height="96">
                     </a>
-                    <a href="/pokedex/{{p.number}}" class="pokemon-list-quick-info">
+                    <a href="/pokedex/{{p.number}}#pokemon-{{p.number}}" class="pokemon-list-quick-info">
                         <h2>{{ p.name }}</h2>
                         {{ p.number }}
                     </a>
@@ -27,7 +39,64 @@
             </ul>
         </aside>
         <div class="pokemon-info">
-            <h1>{{selected_pokemon.name}}</h1>
+            <h1>{{selected_pokemon.name}} <span class="pokenum">{{selected_pokemon.number}}</span></h1>
+            <p class="classification">{{selected_pokemon.classification}}</p>
+            <div class="pokemon-images">
+                {% for img in selected_pokemon_images %}
+                    <figure>
+                    <img class="pixelart" loading="lazy" src="{{ MEDIA_URL }}{{img.image}}" width="96" height="96">
+                    <figcaption>{%firstof img.description "Primary"%}</figcaption>
+                </figure>
+                {% endfor %}
+            </div>
+
+            <p>
+                <dl>
+                    <dt>Height</dt>
+                    <dd>{{selected_pokemon.height}}m</dd>
+                    <dt>Weight</dt>
+                    <dd>{{selected_pokemon.weight}}kg</dd>
+                </dl>
+            </p>
+
+            <div class="types">
+                <ul>
+                {% for type in selected_pokemon_types %}
+                    <li class="type-{{type.name}}">{{type.name}}</li>
+                {% endfor %}
+            </ul>
+            </div>
+            <div class="abilities">
+                <h2>Abilities</h2>
+                <ul>
+                    {% for ability in selected_pokemon_abilities %}
+                        <li><h3>{{ability.name}}</h3>
+                        {{ability.affect}}
+                        </li>
+                        {%empty%}
+                        This pokemon has no abilities
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="evolutions">
+                <div class="pre">
+                    {% if selected_pokemon.prevevolution %}
+                    <a href="/pokedex/{{selected_pokemon.prevevolution.number}}#pokemon-{{selected_pokemon.prevevolution.number}}">
+                        <img class="pixelart" loading="lazy" src="{{ MEDIA_URL }}{{selected_pokemon.prevevolution.primary_image.image}}">
+                        <span>Evolves From: {{ selected_pokemon.prevevolution.name }}</span>
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="post">
+                    {% for postevolution in selected_pokemon_postevolutions %}
+                    <a href="/pokedex/{{postevolution.number}}#pokemon-{{postevolution.number}}">
+                        <img class="pixelart" loading="lazy" src="{{ MEDIA_URL }}{{postevolution.primary_image.image}}">
+                        <span>Evolves To: {{ postevolution.name }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </main>
 </body>

@@ -49,9 +49,9 @@ Follow the instructions below to run the database migrations. This will ensure t
 
 ## Step 5: Load the Applications
 
-Load <http://localhost:8080> and you should be redirected to the "Django administration" login interface.
+Load <http://localhost:8080> and you should be redirected to the Pokedex to view the pokemon data.
 
-Load <http://localhost:8080/minifacebook> to view the latest statuses of users of the minifacebook application. See instructions below for using the Django admin interface, which you can use to create users and status updates. 
+Load <http://localhost:8080/admin> to see the  "Django administration" login interface.
 
 
 ## Hints
